@@ -19,7 +19,7 @@ namespace LoggingDemo.Controllers
         [HttpGet, Route("")]
         public string Home(ILogger logger)
         {
-            logger.Warning("Ooooo, this is a warning!");
+            logger.Warning("Ooooo, this is a warning! (from .NET)");
 
             try
             {
@@ -28,28 +28,10 @@ namespace LoggingDemo.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e, "Look: An intentional error.");
+                logger.Error(e, "Look: An intentional error. (from .NET)");
             }
 
             return "Hello, World. I'm a .NET Core app.";
-        }
-
-        [HttpGet, Route("loop")]
-        public string LogLoop()
-        {
-            int i = 0;
-
-            while(i < 1000000)
-            {
-                Log.Information("Hello. This is log entry #{logIndexNumber}", i++);
-            }
-
-            while(i < 2000000)
-            {
-                Log.Error(new Exception("Intentional error"), "Hello. This is log entry #{logIndexNumber}", i++);
-            }
-
-            return $"All done. Wrote {i} log entries.";
         }
 
         private class Foo
