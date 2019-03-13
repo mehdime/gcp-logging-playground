@@ -13,11 +13,11 @@ namespace LoggingDemo.Controllers
 
         public HomeController(ILogger logger)
         {
-            this.logger = logger?.ForContext<HomeController>();
+            this.logger = logger.ForContext<HomeController>();
         }
 
         [HttpGet, Route("")]
-        public string Home(ILogger logger)
+        public string Home()
         {
             logger.Warning("Ooooo, this is a warning! (from .NET)");
 

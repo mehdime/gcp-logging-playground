@@ -13,7 +13,7 @@ Includes examples designed to make the most of [Stackdriver](https://cloud.googl
 * [Docker Desktop](https://www.docker.com/products/docker-desktop) (enable Kubernetes in Preferences -> Kubenetes -> Enable Kubernetes)
 * [skaffold](https://skaffold.dev/)
 
-If you don't yet have a GKE cluster, you can create one like this (using [preemptible VMs](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms) to keep the costs down):
+If you don't yet have a GKE cluster, create one (using [preemptible VMs](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms) to keep the costs down):
 
 ```
 gcloud services enable container.googleapis.com
@@ -50,7 +50,7 @@ gcloud auth application-default login
 
 > In this version of the code, logs won't be forwarded to Stackdriver. Stackdriver forwarding when running locally is WIP.
 
-Make sure that your `kubectl` context is pointing to your local cluster. Then, at the root of the repo:
+Make sure that `kubectl` is pointing to your local cluster. Then, at the root of the repo:
 
 ```
 # Build all the Docker images and deploy them to the local K8S cluster.
