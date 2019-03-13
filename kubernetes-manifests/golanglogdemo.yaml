@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golanglogdemo
+spec:
+  selector:
+    matchLabels:
+      app: golanglogdemo
+  template:
+    metadata:
+      labels:
+        app: golanglogdemo
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: server
+        image: golanglogdemo
+        ports:
+        - containerPort: 6200
+        env:
+        - name: PORT
+          value: "6200"
+        - name: HOSTNAME
+          value: "*"
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 128Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 1
+          httpGet:
+            path: /
+            port: 6200
+

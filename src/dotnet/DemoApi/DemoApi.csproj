@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+        <AssemblyName>dotnetlogdemo</AssemblyName>
+        <RootNamespace>Gcp.LoggingDemo.Api</RootNamespace>
+
+        <!-- Essential to allow restoring and publishing in two 
+        separate steps in our Dockerfile when building a self-contained
+        Linux binary. See the Dockerfile for more details -->
+        <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="Serilog" Version="2.8.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="1.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    </ItemGroup>
+
+</Project>

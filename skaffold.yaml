@@ -1,0 +1,37 @@
+apiVersion: skaffold/v1beta5
+kind: Config
+build:
+  artifacts:
+  # image tags are relative; to specify an image repo (e.g. GCR), you
+  # must provide a "default repo" using one of the methods described 
+  # here:
+  # https://skaffold.dev/docs/concepts/#image-repository-handling
+  - image: dotnetlogdemo
+    context: src/dotnet
+  - image: golanglogdemo
+    context: src/golang
+  tagPolicy:
+    gitCommit: {}
+deploy:
+  kubectl:
+    manifests:
+    - ./kubernetes-manifests/**.yaml
+profiles:
+# Optionally build using Google Cloud Build instead
+# of the local Docker.
+#
+# This is not used by default. To use it, run:
+# skaffold run -p gcb --default-repo=gcr.io/GCP_PROJECT_ID
+- name: gcb
+  build:
+    googleCloudBuild: {}
+# Optionally build using Kaniko on a GKE cluster instead
+# of the local Docker.
+# 
+# This is not used by default. To use it, run:
+# skaffold run -p kaniko --default-repo=gcr.io/GCP_PROJECT_ID
+- name: kaniko
+  build:
+    kaniko:
+      buildContext:
+        localDir: {}

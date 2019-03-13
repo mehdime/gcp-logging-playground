@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnetlogdemo
+spec:
+  selector:
+    matchLabels:
+      app: dotnetlogdemo
+  template:
+    metadata:
+      labels:
+        app: dotnetlogdemo
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: server
+        image: dotnetlogdemo
+        ports:
+        - containerPort: 6100
+        env:
+        - name: PORT
+          value: "6100"
+        - name: HOSTNAME
+          value: "*"
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 128Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 1
+          httpGet:
+            path: /
+            port: 6100
+
