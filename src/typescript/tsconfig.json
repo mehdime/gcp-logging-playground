@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "target": "es2018",
+    "lib": ["es5", "es6", "dom"],
+    "outDir": ".dist",
+    "resolveJsonModule": true
+  },
+  "include": ["./demo/**/*.ts"]
+}

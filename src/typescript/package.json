@@ -1,0 +1,54 @@
+{
+  "name": "tslogdemo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mehdime/gcp-logging-playground",
+  "author": "Mehdi El Gueddari <emehdi@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "watch": "./node_modules/.bin/nodemon -e ts,json --exec 'yarn run start'",
+    "start": "node ./index.js # | pino-pretty",
+    "build": "tsc",
+    "startProduction": "node .dist/listener.js",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,css,html,yaml,json,md}'"
+  },
+  "dependencies": {
+    "config": "^3.0.1",
+    "fastify": "^2.0.1",
+    "pino": "^5.11.1"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.34",
+    "@types/node": "^11.11.1",
+    "@types/pino": "^5.8.5",
+    "husky": "^1.3.1",
+    "nodemon": "^1.18.10",
+    "pino-pretty": "^2.5.0",
+    "prettier": "^1.16.4",
+    "pretty-quick": "^1.10.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
+  },
+  "nyc": {
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "all": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
