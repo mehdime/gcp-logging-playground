@@ -41,20 +41,6 @@ namespace LoggingDemo.Controllers
             }
         }
 
-        [HttpGet, Route("loop")]
-        public string Loop()
-        {
-            int i = 0;
-            var ex = new Exception("Intentional exception (from .NET) for stress-testing.");
-            
-            while (i < 1000000)
-            {
-                logger.Error(ex, "Just testing (from .NET). Log entry #{index}...", i++);
-            }
-
-            return $"Logged {i} events";
-        }
-
         private class Foo
         {
             public void Crash()
