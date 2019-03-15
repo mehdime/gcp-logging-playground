@@ -1,5 +1,0 @@
-node_modules
-k8s
-coverage
-.dist
-.nyc_output
