@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"runtime/debug"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 var log *logrus.Logger
@@ -59,7 +60,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		requestLog.Errorf("Damn, it failed (intentionally. From Go): %v\n%v", err, string(debug.Stack()))
 	}
 
-	fmt.Fprint(w, "Hello, World. I'm a Go app.")
+	fmt.Fprint(w, "Hello, World. I'm a Go app. \n\nView my logs at https://console.cloud.google.com/logs/viewer?advancedFilter=golanglogdemo \n\nView my errors at https://console.cloud.google.com/errors")
 }
 
 func fail() error {

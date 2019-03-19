@@ -166,7 +166,7 @@ kubectl get pods
 >
 > To view the logs written the demo apps, use `kubectl logs` to view the logs of the running K8S pods.
 > 
-> Alternatively, run the apps using `skaffold run --tail` or `skaffold dev` - this will output the logs to the console.
+> Alternatively, run the apps using `skaffold run --tail` or `skaffold dev`. This will output the logs to the console.
 
 
 ### Option 2: Build locally & run on Google Kubernetes Engine (GKE)
@@ -184,7 +184,7 @@ kubectl get pods
 ```
 
 Then, in the GCP Console:
-* Go to [Stackdriver Logging](https://console.cloud.google.com/logs/viewer) and search for `dotnetlogdemo` or `golanglogdemo` to view the logs written by the demo apps.
+* Search for `dotnetlogdemo` or `golanglogdemo` on the [Stackdriver Logging](https://console.cloud.google.com/logs/viewer) page to view the logs.
 * Go to [Stackdriver Error Reporting](https://console.cloud.google.com/errors) to view the errors logged by the demo apps.
 
 ### Option 3: Build on Google Cloud Build (GCB) & run on Google Kubernetes Engine (GKE)
@@ -206,6 +206,34 @@ Then, in the GCP Console:
 ### Option 4: Build with Kaniko on GKE and run on GKE
 
 [TODO (the build works but pushing the built image to GCR fails for an unknown reason)]
+
+## Demo Apps: What they do
+The Demo apps are Hello World web apps that write info, warning and error logs when their home page is accessed. 
+
+Kukernetes has been configured to [use their home page as its liveness probe](https://github.com/mehdime/gcp-logging-playground/blob/master/kubernetes-manifests/dotnetlogdemo.yaml#L32) once a second. This means that as soon as the demo apps are deployed, they'll start continuously writing logs and errors.
+
+### Access the running apps
+Either run the apps with `skaffold dev` to automatically forward ports on your local machine to the running K8S pods. Or forward ports manually:
+
+```
+kubectl port-forward deployment/dotnetlogdemo 6100:6100
+kubectl port-forward deployment/golanglogdemo 6200:6200
+```
+
+Then access the demo apps at:
+
+
+[http://localhost:6100](http://localhost:6100)
+
+[http://localhost:6200](http://localhost:6200)
+
+### Viewing the logs
+In the GCP Console:
+
+* Search for `dotnetlogdemo` or `golanglogdemo` on the [Stackdriver Logging](https://console.cloud.google.com/logs/viewer) page to view the logs.
+* On the logging page, expand the `jsonPayload` properties of the log entries written by the demo apps to see the structured log they wrote.
+* Go to [Stackdriver Error Reporting](https://console.cloud.google.com/errors) to view the errors logged by the demo apps.
+
 
 ## Skaffold tips & tricks
 
@@ -244,5 +272,3 @@ skaffold run
 ```
 
 Alternatively, you can [set the default image repo in Skaffold's global config](https://skaffold.dev/docs/concepts/#image-repository-handling), which allows you to have a different GCR URL per `kubectl` context. 
-
-

@@ -19,8 +19,8 @@ namespace LoggingDemo.Controllers
         [HttpGet, Route("")]
         public string Home()
         {
-            // Use LogContext to automatically properties to all log entries
-            // written within a block of code.  
+            // Use LogContext to automatically enrich all log entries written within 
+            // a block of code with contextual properties.
             using (LogContext.PushProperty("requestMethod", Request.Method))
             using (LogContext.PushProperty("requestUrl", Request.GetDisplayUrl()))
             {
@@ -37,7 +37,7 @@ namespace LoggingDemo.Controllers
                     logger.Error(e, "Look: An intentional error. (from .NET)");
                 }
 
-                return "Hello, World. I'm a .NET Core app.";
+                return "Hello, World. I'm a .NET Core app. \n\nView my logs at https://console.cloud.google.com/logs/viewer?advancedFilter=dotnetlogdemo \n\nView my errors at https://console.cloud.google.com/errors";
             }
         }
 
