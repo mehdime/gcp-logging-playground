@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1beta5
+apiVersion: skaffold/v1beta7 # Requires Skaffold v0.25.0 or higher
 kind: Config
 build:
   artifacts:
@@ -25,13 +25,3 @@ profiles:
 - name: gcb
   build:
     googleCloudBuild: {}
-# Optionally build using Kaniko on a GKE cluster instead
-# of the local Docker.
-# 
-# This is not used by default. To use it, run:
-# skaffold run -p kaniko --default-repo=gcr.io/GCP_PROJECT_ID
-- name: kaniko
-  build:
-    kaniko:
-      buildContext:
-        localDir: {}

@@ -120,31 +120,38 @@ For everything else, log as usual. And of course, use [structured logging](https
 If you don't yet have a GKE cluster, create one (using [preemptible VMs](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms) to keep the costs down):
 
 ```
+# Enable Google Kubernetes Engine
 gcloud services enable container.googleapis.com
 
-gcloud container clusters create logdemo \
+gcloud beta container clusters create personal \
+--zone=europe-west1-b \
 --preemptible \
---enable-autoupgrade \
+--num-nodes=1 \
 --enable-autoscaling \
---min-nodes=3 \
---max-nodes=10 \
---region=europe-west1
+--min-nodes=1 \
+--max-nodes=6 \
+--maintenance-window=03:00 \
+--enable-ip-alias \
+--enable-autoupgrade \
+--enable-autorepair \
+--enable-stackdriver-kubernetes \
+--no-enable-basic-auth
 
 # Check if it worked
 kubectl get nodes
 ```
 
-You'll also need to enable the Google Container Registry (GCR) API and configure the `docker` CLI to authenticate with GCR if you haven't already:
+You'll also need to enable a few Google Cloud services:
 
 ```
+# Enable Google Cloud Registry and Google Cloud Build 
+# so that we can build on GCB an deploy to GKE.
 gcloud services enable containerregistry.googleapis.com
+gcloud services enable cloudbuild.googleapis.com
 
+# Configure the user that Docker and Skaffold will use 
+# to access Google Cloud services.
 gcloud auth configure-docker
-```
-
-Finally, configure the default credentials that applications like Skaffold will use to authenticate with the Google Cloud APIs:
-
-```
 gcloud auth application-default login
 ```
 
@@ -202,6 +209,8 @@ skaffold run --profile gcb --default-repo=gcr.io/PROJECT_ID
 Then, in the GCP Console:
 * Go to [Stackdriver Logging](https://console.cloud.google.com/logs/viewer) and search for `dotnetlogdemo` or `golanglogdemo` to view the logs written by the demo apps.
 * Go to [Stackdriver Error Reporting](https://console.cloud.google.com/errors) to view the errors logged by the demo apps.
+
+> Our Skaffold config doesn't currently use image caching when building on Google Cloud Build. As a result, each build will start from scratch and will be slow.
 
 ### Option 4: Build with Kaniko on GKE and run on GKE
 
