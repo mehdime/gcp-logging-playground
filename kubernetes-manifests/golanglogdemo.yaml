@@ -22,13 +22,6 @@ spec:
           value: "6200"
         - name: HOSTNAME
           value: "*"
-        resources:
-          requests:
-            cpu: 200m
-            memory: 64Mi
-          limits:
-            cpu: 300m
-            memory: 128Mi
         livenessProbe:
           initialDelaySeconds: 10
           periodSeconds: 1
